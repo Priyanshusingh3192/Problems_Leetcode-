@@ -1,0 +1,50 @@
+class Solution {
+public:
+int compute(vector<int>&v){
+    string s = "";
+    for(int i=0;i<32;i++){
+        if(v[i] == 0){
+            s += '0';
+        }else{
+            s += '1';
+        }
+    }
+    int t = stoi(s,nullptr,2);
+    return t;
+}
+    int minimumSubarrayLength(vector<int>& nums, int k) {
+        
+        int ans = INT_MAX;
+        int n = nums.size();
+        
+        int j = 0;
+        vector<int>v(32,0);
+        for(int i=0;i<n;i++){
+            string s = bitset<32>(nums[i]).to_string();
+            for(int f=0;f<32;f++){
+                if(s[f] == '1'){
+                    v[f]++;
+                }
+            }
+            int curr = compute(v); 
+
+            while(curr >= k && j <= i){
+                // cout<<i<<" "<<j<<endl;
+                ans = min(ans,i-j+1);
+                string temp = bitset<32>(nums[j]).to_string();
+                for(int f=0;f<32;f++){
+                   if(temp[f] == '1'){
+                      v[f]--;
+                   }
+                }
+                j++; 
+                curr = compute(v);   
+                            
+            }
+        }
+        if(ans == INT_MAX){
+            return -1;
+        }
+        return ans;
+    }
+};
