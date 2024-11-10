@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<string> findRepeatedDnaSequences(string s) {
+
+         map<string,int>mp;
+         string temp = s.substr(0,10);
+        //  cout<<temp;
+         int l = 0;
+         set<string>st;
+         for(int r=10;r<s.length();r++){
+             if(mp.find(temp) != mp.end()){
+                st.insert(temp);
+             }
+            //  cout<<temp<<endl;
+             mp[temp]++;
+             temp.erase(0,1);
+             temp += s[r];
+         }
+         if(mp.find(temp) != mp.end()){
+            st.insert(temp);
+         }
+         vector<string>ans;
+         for(auto it:st){
+            ans.push_back(it);
+         }
+         return ans;
+    }
+};
