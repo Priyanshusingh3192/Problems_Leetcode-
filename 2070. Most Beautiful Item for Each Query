@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<int> maximumBeauty(vector<vector<int>>& items, vector<int>& queries) {
+        
+        vector<int>v1;
+        vector<int>v2;
+        sort(items.begin(),items.end());
+        int maxB = 0;
+        for(auto it:items){
+             int beauty = it[1];
+             int price = it[0];
+             maxB = max(maxB,beauty);
+             v1.push_back(price);
+             v2.push_back(maxB);
+        }
+        vector<int>ans;
+
+        for(auto it:queries){
+            int indx = upper_bound(v1.begin(),v1.end(),it) - v1.begin();
+            indx--;
+            if(indx == -1){
+                ans.push_back(0);
+            }else{
+                ans.push_back(v2[indx]);
+            }
+        }
+        return ans;
+    }
+};
